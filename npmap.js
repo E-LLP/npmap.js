@@ -26,6 +26,7 @@ L.npmap = module.exports = {
     zoomdisplay: require('./src/control/zoomdisplay')
   },
   icon: {
+    fa: require('./src/icon/fa'),
     maki: require('./src/icon/maki'),
     npmaki: require('./src/icon/npmaki')
   },
