@@ -35,6 +35,37 @@ var GeoJsonLayer = L.GeoJSON.extend({
   },
   _create: function(options, data) {
     L.GeoJSON.prototype.initialize.call(this, data, options);
+
+    //options.lineClickRadius = 9;
+    //options.lineClickRadius = 30;
+
+    if (options.lineClickRadius) {
+      var features = [];
+
+      this.eachLayer(function(layer) {
+        if (layer.feature.geometry.type.toLowerCase().indexOf('line') > -1) {
+          features.push(layer.feature);
+        }
+      });
+
+      if (features.length) {
+        var clickLayer = new L.FeatureGroup().addTo(this._map);
+
+        options.style = {
+          color: 'red',
+          opacity: 0,
+          weight: options.lineClickRadius
+        };
+
+        for (var i = 0; i < features.length; i++) {
+          // Also store original _leaflet_id with new geometry so you can keep the FeatureGroup synced up.
+          clickLayer.addLayer(new L.GeoJSON(features[i], options));
+        }
+
+        // Hook up to layer unload and hide events and remove clickLayer then too.
+      }
+    }
+
     this.fire('ready');
     this.readyFired = true;
     this._loaded  = true;
