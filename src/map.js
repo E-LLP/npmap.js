@@ -26,6 +26,19 @@ require('./popup.js');
       elControl = util.getChildElementsByClassName(container, 'leaflet-control-container')[0],
       me = this;
 
+    function checkOverflow(el) {
+      var curOverflow = el.style.overflow;
+
+      if (!curOverflow || curOverflow === 'visible') {
+        el.style.overflow = 'hidden';
+      }
+
+      var isOverflowing = el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight;
+
+      el.style.overflow = curOverflow;
+
+      return isOverflowing;
+    }
     function resize() {
       var left = util.getOuterDimensions(elControl.childNodes[2]).width;
 
@@ -36,6 +49,16 @@ require('./popup.js');
       }
 
       elAttribution.style['max-width'] = (util.getOuterDimensions(container).width - left) + 'px';
+
+      if (checkOverflow(elAttribution)) {
+        if (!L.DomUtil.hasClass(elAttribution, 'leaflet-compact-attribution')) {
+          L.DomUtil.addClass(elAttribution, 'leaflet-compact-attribution');
+        }
+      } else {
+        if (L.DomUtil.hasClass(elAttribution, 'leaflet-compact-attribution')) {
+          L.DomUtil.removeClass(elAttribution, 'leaflet-compact-attribution');
+        }
+      }
     }
 
     if (this.options.attributionControl) {

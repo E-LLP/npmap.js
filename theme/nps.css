@@ -1720,3 +1720,32 @@
       right: 0;
       top: 0;
     }
+.leaflet-container .leaflet-control-attribution.leaflet-compact-attribution {
+  margin: 10px;
+  background: #fff;
+  border-radius: 3px 13px 13px 3px;
+  padding: 3px 31px 3px 3px;
+  visibility: hidden;
+}
+.leaflet-container .leaflet-control-attribution.leaflet-compact-attribution:after {
+  content: '';
+  background-color: #fff;
+  background-color: rgba(255,255,255,.5);
+  background-position: 0 -78px;
+  border-radius: 50%;
+  position: absolute;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  vertical-align: middle;
+  bottom: 0;
+  z-index: 1;
+  visibility: visible;
+  cursor: pointer;
+}
+.leaflet-control-attribution:after {
+  opacity: .75;
+  background-image: url(https://api.tiles.mapbox.com/mapbox.js/v2.1.6/images/icons-000000@2x.png);
+  background-repeat: no-repeat;
+  background-size: 26px 260px;
+}
