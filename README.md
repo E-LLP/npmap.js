@@ -4,6 +4,8 @@
 
 # NPMap.js
 
+[![Circle CI](https://circleci.com/gh/nationalparkservice/npmap.js.svg?style=svg)](https://circleci.com/gh/nationalparkservice/npmap.js)
+
 Extends [Leaflet](http://leafletjs.com) to include functionality and a look-and-feel built specifically for the National Park Service.
 
 This library is under active development, so please help test and [report issues](https://github.com/nationalparkservice/npmap.js/issues).
@@ -79,11 +81,3 @@ Simple and targeted examples reside in the `examples` directory. This is a great
 ## Support
 
 You can get in touch with the NPMap team by contacting us via Twitter ([@npmap](http://twitter.com/npmap)) or email ([npmap@nps.gov](mailto:npmap@nps.gov)). We are happy to help with any questions, and feedback is welcome as well!
-
-## Code Status
-
-[![Build Status](https://travis-ci.org/nationalparkservice/npmap.js.png)](https://travis-ci.org/nationalparkservice/npmap.js)
-[![Dependencies](https://david-dm.org/nationalparkservice/npmap.js
-.png)](https://david-dm.org/nationalparkservice/npmap.js#info=dependencies&view=table)
-[![Dev Dependencies](https://david-dm.org/nationalparkservice/npmap.js/dev-status.png)](https://david-dm.org/nationalparkservice/npmap.js#info=devDependencies&view=table)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)

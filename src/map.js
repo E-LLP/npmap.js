@@ -27,12 +27,19 @@ require('./popup.js');
       me = this;
 
     function resize() {
-      var left = util.getOuterDimensions(elControl.childNodes[2]).width;
+      var left = util.getOuterDimensions(elControl.childNodes[2]).width,
+        overviewControl = util.getChildElementsByClassName(container, 'leaflet-control-overview')[0];
 
       if (left) {
         left = left + 15;
       } else {
         left = 10;
+      }
+
+      if (overviewControl && !util.isHidden(overviewControl)) {
+        elAttribution.style['margin-right'] = util.getOuterDimensions(overviewControl).width + 'px';
+      } else {
+        elAttribution.style['margin-right'] = 0;
       }
 
       elAttribution.style['max-width'] = (util.getOuterDimensions(container).width - left) + 'px';
@@ -752,8 +759,21 @@ var Map = L.Map.extend({
       config.maxZoom = 19;
     }
 
+    if (config.baseLayers.length !== 0 && config.maxZoom > config.baseLayers[0].maxZoom) {
+      config.maxZoom = config.baseLayers[0].maxZoom;
+    }
+
     delete config.layers;
     config.zoom = typeof config.zoom === 'number' ? config.zoom : 4;
+
+    if (config.baseLayers.length !== 0) {
+      if (config.baseLayers[0].minZoom > config.zoom) {
+        config.zoom = config.baseLayers[0].minZoom;
+      } else if (config.baseLayers[0].maxZoom < config.zoom) {
+        config.zoom = config.baseLayers[0].maxZoom;
+      }
+    }
+
     return config;
   },
   _updateImproveLinks: function() {
