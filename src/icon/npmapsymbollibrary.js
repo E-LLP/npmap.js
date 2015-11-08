@@ -5,6 +5,7 @@
 var util = require('../util/util')
 var NpmapIcon = L.Icon.extend({
   options: {
+    'icon-only': false,
     'marker-color': '#000000',
     'marker-size': 'medium'
   },
@@ -16,24 +17,43 @@ var NpmapIcon = L.Icon.extend({
 
     var size = options['marker-size'] || 'medium'
     var sizes = {
-      large: {
-        iconAnchor: [17.5, 49],
-        iconSize: [35, 55],
-        popupAnchor: [2, -45]
+      pin: {
+        large: {
+          iconAnchor: [17.5, 49],
+          iconSize: [35, 55],
+          popupAnchor: [2, -45]
+        },
+        medium: {
+          iconAnchor: [14, 36],
+          iconSize: [28, 41],
+          popupAnchor: [2, -34]
+        },
+        small: {
+          iconAnchor: [10, 24],
+          iconSize: [20, 30],
+          popupAnchor: [2, -24]
+        }
       },
-      medium: {
-        iconAnchor: [14, 36],
-        iconSize: [28, 41],
-        popupAnchor: [2, -34]
-      },
-      small: {
-        iconAnchor: [10, 24],
-        iconSize: [20, 30],
-        popupAnchor: [2, -24]
+      icon: {
+        large: {
+          iconAnchor: [17, 19],
+          iconSize: [24, 24],
+          popupAnchor: [2, -12]
+        },
+        medium: {
+          iconAnchor: [14, 13],
+          iconSize: [18, 18],
+          popupAnchor: [2, -12]
+        },
+        small: {
+          iconAnchor: [11, 10],
+          iconSize: [12, 12],
+          popupAnchor: [2, -12]
+        }
       }
     }
 
-    L.Util.extend(options, sizes[size])
+    L.Util.extend(options, sizes[(options['icon-only'] ? 'icon' : 'pin')][size])
     L.Util.setOptions(this, options)
   },
   createIcon: function (oldIcon) {
@@ -42,11 +62,15 @@ var NpmapIcon = L.Icon.extend({
     var divMarker = (oldIcon && oldIcon.tagName === 'DIV') ? oldIcon : document.createElement('div')
 
     this._setIconStyles(divMarker, 'icon')
-    divMarker.style.backgroundImage = util.handlebars(NpmapIcon.MAKI_TEMPLATE, {
-      color: options['marker-color'].replace('#', ''),
-      retina: L.Browser.retina ? '@2x' : '',
-      size: options['marker-size'].slice(0, 1)
-    })
+
+    if (!options['icon-only']) {
+      divMarker.style.backgroundImage = util.handlebars(NpmapIcon.MAKI_TEMPLATE, {
+        color: options['marker-color'].replace('#', ''),
+        retina: L.Browser.retina ? '@2x' : '',
+        size: options['marker-size'].slice(0, 1)
+      })
+    }
+
     divMarker.appendChild(divIcon)
     return divMarker
   },
