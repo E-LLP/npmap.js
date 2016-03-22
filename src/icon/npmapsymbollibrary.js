@@ -41,12 +41,14 @@ var NpmapIcon = L.Icon.extend({
       }
     };
 
+// npmapsymbollibrary-icon small dot-white-small-2x
+
     L.Util.extend(options, sizes[size]);
     L.Util.setOptions(this, options);
   },
   createIcon: function (oldIcon) {
     var options = this.options;
-    var divIcon = L.DomUtil.create('div', 'npmapsymbollibrary-icon ' + options['marker-size'] + ' ' + options['marker-symbol'] + '-' + options['marker-size'] + (L.Browser.retina ? '-2x' : ''));
+    var divIcon = L.DomUtil.create('div', 'npmap-symbol-library-icon ' + options['marker-size'] + ' ' + options['marker-symbol'] + '-' + options['marker-size'] + (L.Browser.retina ? '-2x' : ''));
     var divMarker = (oldIcon && oldIcon.tagName === 'DIV') ? oldIcon : document.createElement('div');
 
     this._setIconStyles(divMarker, 'icon');

@@ -1,14 +1,12 @@
 module.exports = function (grunt) {
   'use strict';
 
-  var cssNpmapSymbolLibrary = '';
-  var npmapSymbolLibrary = require('./node_modules/npmap-symbol-library/www/npmap-builder/npmap-symbol-library.json');
+  // TODO: These two "cleanups" should be done in the NPMap Symbol Library build script.
+  var cssNpmapSymbolLibrary = grunt.file.read('./node_modules/npmap-symbol-library/www/npmap-builder/npmap-symbol-library-sprite.css')
+    .replace(/.npmaki-icon/g, '.npmap-symbol-library-icon')
+    .replace('@media', '@media {')
+    .replace(/images\//g, 'images/icon/npmap-symbol-library/');
   var pkg = require('./package.json');
-  var sizes = {
-    large: 24,
-    medium: 18,
-    small: 12
-  };
   var secrets;
 
   function loadNpmTasks () {
@@ -17,15 +15,6 @@ module.exports = function (grunt) {
     }).forEach(function (task) {
       grunt.loadNpmTasks(task);
     });
-  }
-
-  for (var i = 0; i < npmapSymbolLibrary.length; i++) {
-    var icon = npmapSymbolLibrary[i];
-
-    for (var prop in sizes) {
-      cssNpmapSymbolLibrary += '.' + icon.icon + '-' + prop + ' {background-image: url(images/icon/npmap-symbol-library/' + icon.icon + '-' + sizes[prop] + '.png);}\n';
-      cssNpmapSymbolLibrary += '.' + icon.icon + '-' + prop + '-2x {background-image: url(images/icon/npmap-symbol-library/' + icon.icon + '-' + sizes[prop] + '@2x.png);}\n';
-    }
   }
 
   try {
@@ -160,7 +149,7 @@ module.exports = function (grunt) {
         ]
       },
       npmapSymbolLibrary: {
-        cwd: 'node_modules/npmap-symbol-library/renders/npmap-builder/',
+        cwd: 'node_modules/npmap-symbol-library/www/npmap-builder/images/',
         dest: 'dist/images/icon/npmap-symbol-library',
         expand: true,
         src: [
